@@ -31,7 +31,7 @@ namespace Darknet.Web.Controllers
             if (ModelState.IsValid)
             {
                 string uri = "https://localhost:44346/api/Account/RegisterUser";
-                string RegistrationStatus = await _httpHelper.PostAsync(uri, userRegistrationModel);
+                string RegistrationStatus = await _httpHelper.PostAsync<UserRegistrationModel, string>(uri, userRegistrationModel);
                 if (RegistrationStatus == "success")
                 {
                     ModelState.Clear();
@@ -57,7 +57,7 @@ namespace Darknet.Web.Controllers
             if (ModelState.IsValid)
             {
                 string uri = "https://localhost:44346/api/Account/AuthenticateUser";
-                string LoginStatus = await _httpHelper.PostAsync(uri, userCredentialsModel);
+                string LoginStatus = await _httpHelper.PostAsync<UserCredentialsModel, string>(uri, userCredentialsModel);
 
                 if (LoginStatus == "success")
                 {

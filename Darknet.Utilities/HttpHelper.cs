@@ -8,28 +8,45 @@ using System.Threading.Tasks;
 
 namespace Darknet.Utilities
 {
-    public class HttpHelper: IHttpHelper
+    public class HttpHelper : IHttpHelper
     {
         HttpClient httpClient;
-        public HttpHelper() {
+        public HttpHelper()
+        {
             httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<string> PostAsync<T>(string uri, T obj) {
-            string status=string.Empty;
+        public async Task<V> PostAsync<T, V>(string uri, T obj)
+        {
             var json = JsonConvert.SerializeObject(obj);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await httpClient.PostAsync(uri, content);
             if (response.IsSuccessStatusCode)
             {
                 String responseString = await response.Content.ReadAsStringAsync();
-                status = JsonConvert.DeserializeObject<string>(responseString);
+                return JsonConvert.DeserializeObject<V>(responseString);
             }
+            else
+            {
+                return default(V);
+            }
+        }
 
-            return status;
+        public async Task<V> GetAsync<V>(string uri)
+        {
+            HttpResponseMessage response = await httpClient.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
+            {
+                String responseString = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<V>(responseString);
+            }
+            else
+            {
+                return default(V);
+            }
         }
     }
 }

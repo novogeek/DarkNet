@@ -20,7 +20,7 @@ namespace Darknet.Repository
             UserDetailsModel userDetailsModel= new UserDetailsModel();
             using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
             {
-                SqlCommand sqlCommand = new SqlCommand("uspRegisterUser", sqlConnection)
+                SqlCommand sqlCommand = new SqlCommand("uspGetUserDetails", sqlConnection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };

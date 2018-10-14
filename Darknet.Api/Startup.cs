@@ -29,6 +29,7 @@ namespace Darknet.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IAccountRepository>(s => { return new AccountRepository(Configuration["ConnectionStrings:DbConnectionString"]); });
+            services.AddTransient<IUserDetailsRepository>(s => { return new UserDetailsRepository(Configuration["ConnectionStrings:DbConnectionString"]); });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Register the Swagger generator, defining 1 or more Swagger documents

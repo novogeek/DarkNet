@@ -3,7 +3,7 @@
     <text>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a id="profile-link">Hello @User.Identity.Name!</a>
+                <a id="profile-link" href="/UserDetails/Profile">Hello @User.Identity.Name!</a>
             </li>
             <li>
                 @Html.ActionLink("Logout", "Logout", "Account")

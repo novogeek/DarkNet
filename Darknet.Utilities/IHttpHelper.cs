@@ -7,6 +7,8 @@ namespace Darknet.Utilities
 {
     public interface IHttpHelper
     {
-        Task<string> PostAsync<T>(string uri, T obj);
+        Task<V> PostAsync<T, V>(string uri, T obj);
+
+        Task<V> GetAsync<V>(string uri);
     }
 }
