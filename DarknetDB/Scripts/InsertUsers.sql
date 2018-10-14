@@ -12,10 +12,10 @@ Post-Deployment Script Template
 
 USE [DarknetDB]
 GO
-INSERT INTO [dbo].[Users] ([Username],[Password],[FirstName],[LastName]) VALUES ('john', 'john', 'John', 'Doe')
-INSERT INTO [dbo].[Users] ([Username],[Password],[FirstName],[LastName]) VALUES ('bobby', 'bobby', 'Bobby', 'Fischer')
-INSERT INTO [dbo].[Users] ([Username],[Password],[FirstName],[LastName]) VALUES ('mikhail', 'mikhail', 'Mikhail', 'Tal')
-INSERT INTO [dbo].[Users] ([Username],[Password],[FirstName],[LastName]) VALUES ('sherlock', 'sherlock', 'Sherlock', 'Holmes')
+INSERT INTO [dbo].[Users] ([Username],[Password],[FirstName],[LastName], Mobile, [Address]) VALUES ('john', 'john', 'John', 'Doe', '4998887770', 'Canada')
+INSERT INTO [dbo].[Users] ([Username],[Password],[FirstName],[LastName], Mobile, [Address]) VALUES ('bobby', 'bobby', 'Bobby', 'Fischer', '425666777', 'USA')
+INSERT INTO [dbo].[Users] ([Username],[Password],[FirstName],[LastName], Mobile, [Address]) VALUES ('mikhail', 'mikhail', 'Mikhail', 'Tal', '2198887767', 'Russia')
+INSERT INTO [dbo].[Users] ([Username],[Password],[FirstName],[LastName], Mobile, [Address]) VALUES ('sherlock', 'sherlock', 'Sherlock', 'Holmes', '300310212', 'UK')
 GO
 
 

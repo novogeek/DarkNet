@@ -28,10 +28,10 @@ namespace Darknet.Api.Controllers
 
         [Route("AuthenticateUser")]
         [HttpPost]
-        public string AuthenticateUser([FromBody] UserCredentials userCredentials)
+        public string AuthenticateUser([FromBody] UserCredentialsModel userCredentialsModel)
         {
             string statusMsg = "";
-            statusMsg = _userRepository.AuthenticateUser(userCredentials);
+            statusMsg = _userRepository.AuthenticateUser(userCredentialsModel);
             return statusMsg;
         }
     }

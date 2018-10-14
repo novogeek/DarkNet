@@ -8,6 +8,6 @@ namespace Darknet.Repository
     public interface IUserRepository
     {
         string RegisterUser(UserRegistrationModel userRegistrationModel);
-        string AuthenticateUser(UserCredentials userCredentials);
+        string AuthenticateUser(UserCredentialsModel userCredentials);
     }
 }
