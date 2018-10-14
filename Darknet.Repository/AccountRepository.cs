@@ -5,10 +5,10 @@ using Darknet.Models;
 
 namespace Darknet.Repository
 {
-    public class UserRepository: IUserRepository
+    public class AccountRepository: IAccountRepository
     {
         private string _connectionString;
-        public UserRepository(string connectionString) {
+        public AccountRepository(string connectionString) {
             _connectionString = connectionString;
         }
         public string RegisterUser(UserRegistrationModel userRegistrationModel) {

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Darknet.Repository
 {
-    public interface IUserRepository
+    public interface IAccountRepository
     {
         string RegisterUser(UserRegistrationModel userRegistrationModel);
         string AuthenticateUser(UserCredentialsModel userCredentials);

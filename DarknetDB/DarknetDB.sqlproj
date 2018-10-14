@@ -65,6 +65,7 @@
     <Build Include="Tables\Users.sql" />
     <Build Include="StoredProcs\uspRegisterUser.sql" />
     <Build Include="StoredProcs\uspAuthenticateUser.sql" />
+    <Build Include="StoredProcs\uspGetUserDetails.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\InsertUsers.sql" />

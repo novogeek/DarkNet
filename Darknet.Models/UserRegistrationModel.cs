@@ -23,14 +23,4 @@ namespace Darknet.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
     }
-
-    public class UserCredentialsModel
-    {
-        [Required]
-        [Display(Name = "User Name")]
-        public string Username { get; set; }
-        [Required]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
-    }
 }

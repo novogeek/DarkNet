@@ -13,8 +13,8 @@ namespace Darknet.Api.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        IUserRepository _userRepository;
-        public AccountController(IUserRepository userRepository) {
+        IAccountRepository _userRepository;
+        public AccountController(IAccountRepository userRepository) {
             _userRepository = userRepository;
         }
 
