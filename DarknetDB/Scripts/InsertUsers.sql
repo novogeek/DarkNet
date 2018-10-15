@@ -18,4 +18,8 @@ INSERT INTO [dbo].[Users] ([Username],[Password],[FirstName],[LastName], Mobile,
 INSERT INTO [dbo].[Users] ([Username],[Password],[FirstName],[LastName], Mobile, [Address]) VALUES ('sherlock', 'sherlock', 'Sherlock', 'Holmes', '300310212', 'UK')
 GO
 
-
+GO
+INSERT INTO [dbo].[Config] (Config.category, Config.code, Config.value) VALUES ('privacy', 'pub', 'Public')
+INSERT INTO [dbo].[Config] (Config.category, Config.code, Config.value) VALUES ('privacy', 'frn', 'Friends')
+INSERT INTO [dbo].[Config] (Config.category, Config.code, Config.value) VALUES ('privacy', 'fam', 'Family')
+GO

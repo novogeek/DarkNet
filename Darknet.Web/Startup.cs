@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Darknet.Utilities;
+using Darknet.Models;
 
 namespace Darknet.Web
 {
@@ -38,7 +39,7 @@ namespace Darknet.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            services.Configure<ConfigOptions>(Configuration.GetSection("settings"));
             services.AddTransient<IHttpHelper, HttpHelper>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

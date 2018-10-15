@@ -7,15 +7,17 @@ using Darknet.Models;
 using Darknet.Utilities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.Extensions.Options;
 
 namespace Darknet.Web.Controllers
 {
     public class AccountController : Controller
     {
         IHttpHelper _httpHelper;
-        public AccountController(IHttpHelper httpHelper) {
+        ConfigOptions _configOptions;
+        public AccountController(IHttpHelper httpHelper, IOptions<ConfigOptions> configOptions) {
             _httpHelper = httpHelper;
+            _configOptions = configOptions.Value;
         }
         public IActionResult Index()
         {
@@ -30,7 +32,7 @@ namespace Darknet.Web.Controllers
         public async Task<IActionResult> RegisterUser([Bind] UserRegistrationModel userRegistrationModel) {
             if (ModelState.IsValid)
             {
-                string uri = "https://localhost:44346/api/Account/RegisterUser";
+                string uri = $"{_configOptions.BaseUrl}/api/Account/RegisterUser";
                 string RegistrationStatus = await _httpHelper.PostAsync<UserRegistrationModel, string>(uri, userRegistrationModel);
                 if (RegistrationStatus == "success")
                 {
@@ -56,7 +58,7 @@ namespace Darknet.Web.Controllers
         public async Task<IActionResult> Login([Bind] UserCredentialsModel userCredentialsModel) {
             if (ModelState.IsValid)
             {
-                string uri = "https://localhost:44346/api/Account/AuthenticateUser";
+                string uri = $"{_configOptions.BaseUrl}/api/Account/AuthenticateUser";
                 string LoginStatus = await _httpHelper.PostAsync<UserCredentialsModel, string>(uri, userCredentialsModel);
 
                 if (LoginStatus == "success")

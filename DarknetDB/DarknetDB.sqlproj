@@ -66,8 +66,13 @@
     <Build Include="StoredProcs\uspRegisterUser.sql" />
     <Build Include="StoredProcs\uspAuthenticateUser.sql" />
     <Build Include="StoredProcs\uspGetUserDetails.sql" />
+    <Build Include="Tables\Config.sql" />
+    <Build Include="Tables\Relations.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\InsertUsers.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="DarknetDB.refactorlog" />
   </ItemGroup>
 </Project>

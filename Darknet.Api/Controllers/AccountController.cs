@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Darknet.Models;
 using Darknet.Repository;
+using Microsoft.Extensions.Options;
 
 namespace Darknet.Api.Controllers
 {

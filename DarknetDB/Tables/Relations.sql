@@ -1,0 +1,4 @@
+﻿CREATE TABLE [dbo].[Relations]
+(
+	[Id] INT NOT NULL IDENTITY PRIMARY KEY
+)
