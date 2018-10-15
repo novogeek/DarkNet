@@ -6,5 +6,6 @@
     [FirstName] NVARCHAR(50) NOT NULL, 
     [LastName] NVARCHAR(50) NOT NULL, 
     [Mobile] NVARCHAR(15) NOT NULL, 
-    [Address] NVARCHAR(100) NOT NULL
+    [Address] NVARCHAR(100) NOT NULL, 
+    CONSTRAINT [AK_Users_Username] UNIQUE ([Username])
 )

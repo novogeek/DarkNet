@@ -1,15 +1,17 @@
 ﻿@if (User.Identity.IsAuthenticated)
 {
-    <text>
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a id="profile-link" href="/UserDetails/Profile">Hello @User.Identity.Name!</a>
-            </li>
-            <li>
-                @Html.ActionLink("Logout", "Logout", "Account")
-            </li>
-        </ul>
-    </text>
+<ul class="nav navbar-nav">
+    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+    <li><a id="profile-link" href="/UserDetails/Profile">Profile</a></li>
+</ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a>Hello @User.Identity.Name!</a>
+        </li>
+        <li>
+            @Html.ActionLink("Logout", "Logout", "Account")
+        </li>
+    </ul>
 }
 else
 {
