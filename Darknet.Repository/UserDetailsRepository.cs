@@ -33,9 +33,19 @@ namespace Darknet.Repository
                         {
                             FirstName = (string)sqlDataReader["FirstName"],
                             LastName = (string)sqlDataReader["LastName"],
-                            Mobile= (string)sqlDataReader["Mobile"],
-                            Address= (string)sqlDataReader["Address"],
+                            Mobile = (string)sqlDataReader["Mobile"],
+                            Address = (string)sqlDataReader["Address"],
+                            Friends = new List<Friend>()
                         };
+                        await sqlDataReader.NextResultAsync();
+                        while (await sqlDataReader.ReadAsync()) {
+                            userDetailsModel.Friends.Add(new Friend() {
+                                FirstName = (string)sqlDataReader["FirstName"],
+                                LastName = (string)sqlDataReader["LastName"],
+                                Username= (string)sqlDataReader["Username"],
+                                PrivacyLevel = (string)sqlDataReader["PrivacyLevel"],
+                            });
+                        }
                     }
                 }
             }

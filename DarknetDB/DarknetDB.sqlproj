@@ -68,6 +68,7 @@
     <Build Include="StoredProcs\uspGetUserDetails.sql" />
     <Build Include="Tables\Config.sql" />
     <Build Include="Tables\Friends.sql" />
+    <Build Include="StoredProcs\uspGetFriendsList.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\InsertSeedData.sql" />

@@ -6,5 +6,6 @@
     [PrivacyLevel] NVARCHAR(10) NOT NULL, 
     CONSTRAINT [FK_Friends_FnUn] FOREIGN KEY ([FriendName]) REFERENCES [Users]([Username]), 
     CONSTRAINT [FK_Friends_UnUn] FOREIGN KEY ([Username]) REFERENCES [Users]([Username]), 
-    CONSTRAINT [FK_Friends_Config] FOREIGN KEY ([PrivacyLevel]) REFERENCES [Config]([Code])
+    CONSTRAINT [FK_Friends_Config] FOREIGN KEY ([PrivacyLevel]) REFERENCES [Config]([Code]), 
+    CONSTRAINT [AK_Friends_UNFN] UNIQUE ([Username], [FriendName])
 )
