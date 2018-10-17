@@ -33,7 +33,6 @@ GO
 INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('alice', 'bob', 'acq')
 INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('alice', 'charlie', 'frn')
 INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('alice', 'doe', 'fam')
-INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('alice', 'eve', 'acq')
 INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('alice', 'frank', 'frn')
 INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('alice', 'groot', 'acq')
 
@@ -46,14 +45,19 @@ INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('bob', 
 GO
 
 GO
-INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy) VALUES ('alice', 'Writing a list of random sentences is harder than I initially thought it would be', 'Acquaintance')
-INSERT INTO [dbo].[Config] (Config.category, Config.code, Config.value) VALUES ('alice', 'I think I will buy the red car, or I will lease the blue one.', 'Friends')
-INSERT INTO [dbo].[Config] (Config.category, Config.code, Config.value) VALUES ('alice', 'Should we start class now, or should we wait for everyone to get here?', 'Family')
-INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy) VALUES ('alice', 'I really want to go to work, but I am too sick to drive.', 'Acquaintance')
+INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('alice', 'Writing a list of random sentences is harder than I initially thought it would be', 'acq', '2018-08-12 20:17')
+INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('alice', 'I think I will buy the red car, or I will lease the blue one.', 'frn', '2018-07-17 07:15')
+INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('alice', 'Should we start class now, or should we wait for everyone to get here?', 'fam', '2018-07-15 20:15:31.840')
+INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('alice', 'I really want to go to work, but I am too sick to drive.', 'acq', '2018-06-14 20:15:31.840')
 
-INSERT INTO [dbo].[Config] (Config.category, Config.code, Config.value) VALUES ('bob', 'I currently have 4 windows open up… and I don’t know why.', 'Friends')
-INSERT INTO [dbo].[Config] (Config.category, Config.code, Config.value) VALUES ('bob', 'Italy is my favorite country; in fact, I plan to spend two weeks there next year.', 'Family')
-INSERT INTO [dbo].[Config] (Config.category, Config.code, Config.value) VALUES ('bob', 'The sky is clear; the stars are twinkling.', 'Family')
-INSERT INTO [dbo].[Config] (Config.category, Config.code, Config.value) VALUES ('bob', 'Malls are great places to shop; I can find everything I need under one roof.', 'Family')
+INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('bob', 'I currently have 4 windows open up… and I don’t know why.', 'acq', '2018-05-12 20:15:31.840')
+INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('bob', 'Italy is my favorite country; in fact, I plan to spend two weeks there next year.', 'frn', '2018-08-12 20:15:31.840')
+INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('bob', 'The sky is clear; the stars are twinkling.', 'fam', '2018-10-17 20:15:31.840')
+INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('bob', 'Malls are great places to shop; I can find everything I need under one roof.', 'frn', '2018-04-13 20:15:31.840')
+
+INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('eve', 'I am happy to take your donation; any amount will be greatly appreciated.', 'frn', '2018-6-14 20:15:31.840')
+INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('eve', 'Christmas is coming!', 'frn', '2018-07-07 20:15:31.840')
+INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('eve', 'Abstraction is often one floor above you.', 'frn', '2018-05-04 20:15:31.840')
+INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('eve', 'Tom got a small piece of pie.', 'frn', '2018-04-03 20:17')
 
 GO
