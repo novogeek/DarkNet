@@ -6,15 +6,39 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Darknet.Web.Models;
 using Microsoft.AspNetCore.Authorization;
+using Darknet.Utilities;
+using Darknet.Models;
+using Darknet.Web.Models;
+using Microsoft.Extensions.Options;
 
 namespace Darknet.Web.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        IHttpHelper _httpHelper;
+        ConfigOptions _configOptions;
+        public HomeController(IHttpHelper httpHelper, IOptions<ConfigOptions> configOptions)
         {
-            return View();
+            _httpHelper = httpHelper;
+            _configOptions = configOptions.Value;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            string username = User.Identity.Name;
+            string uri = $"{_configOptions.BaseUrl}/api/UserDetails/GetUserDetails?username={username}";
+            UserDetailsModel userDetailsModel = await _httpHelper.GetAsync<UserDetailsModel>(uri);
+
+            UserDetailsViewModel userDetailsViewModel = new UserDetailsViewModel
+            {
+                FirstName = userDetailsModel.FirstName,
+                LastName = userDetailsModel.LastName,
+                Address=userDetailsModel.Address,
+                Mobile=userDetailsModel.Mobile,
+                FriendsListDict = userDetailsModel.Friends.GroupBy(f => f.PrivacyLevel).ToDictionary(g => g.Key, g => g.ToList())
+            };
+            return View(userDetailsViewModel);
         }
 
         public IActionResult About()

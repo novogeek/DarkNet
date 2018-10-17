@@ -35,3 +35,20 @@ body {
         display: none;
     }
 }
+
+/* Custom styles */
+ul.customList {
+    padding:2px 0px 2px 5px;
+}
+li.customListItem {
+    padding: 2px 0px 2px 20px;
+}
+li.customListItemLabel {
+    padding: 2px 0px 2px 5px;
+}
+ul.customList, li.customListItem {
+    list-style: none;
+}
+.profile {
+    padding-left:20px;
+}
