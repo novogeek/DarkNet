@@ -23,10 +23,9 @@ namespace Darknet.Web.Controllers
             _httpHelper = httpHelper;
             _configOptions = configOptions.Value;
         }
-
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string username)
         {
-            string username = User.Identity.Name;
+            if (username is null) { username = User.Identity.Name; }
             string uri = $"{_configOptions.BaseUrl}/api/UserDetails/GetUserDetails?username={username}";
             UserDetailsModel userDetailsModel = await _httpHelper.GetAsync<UserDetailsModel>(uri);
 
@@ -41,7 +40,7 @@ namespace Darknet.Web.Controllers
                 Mobile = userDetailsModel.Mobile,
                 FriendsListDict = userDetailsModel.Friends
                     .OrderByDescending(d=>d.PrivacyLevel)
-                    .OrderBy(b => b.FirstName)
+                    .ThenBy(b => b.FirstName)
                     .GroupBy(f => f.PrivacyLevel)
                     .ToDictionary(g => g.Key, g => g.ToList()),
                 lstPrivacyLevelsModel = lstPrivacyLevelsModel
