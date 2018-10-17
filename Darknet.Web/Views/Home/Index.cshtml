@@ -10,59 +10,7 @@
 
 <div class="row">
     <div class="col-md-3">
-        <div class="panel-group">
-            <div class="panel panel-default">
-                <div class="panel-heading">Profile Info</div>
-                <div class="panel-body">
-                    <div class="profile">
-                        <div class="row">
-                            <p class=""><label>First Name:</label> @Model.FirstName</p>
-                        </div>
-                        <div class="row">
-                            <p class=""><label>Last Name:</label> @Model.LastName</p>
-                        </div>
-                        <div class="row">
-                            <p class=""><label>Mobile:</label> @Model.Mobile</p>
-                        </div>
-                        <div class="row">
-                            <p class=""><label>Address:</label> @Model.Address</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel-group">
-            <div class="panel panel-default">
-                <div class="panel-heading">Relationships </div>
-                <div class="panel-body">
-                    @foreach (var friendsListGroup in Model.FriendsListDict)
-                    {
-                    <ul class="customList">
-                        <li class="customListItemLabel"><label>@friendsListGroup.Key</label></li>
-                        @foreach (var friend in friendsListGroup.Value)
-                        {
-                            var profileLink = $"/UserDetails/Profile?username={friend.Username}";
-                            <li class="customListItem"><a href="@profileLink">@friend.FirstName @friend.LastName</a></li>
-                        }
-                    </ul>
-                    }
-
-                    @*@foreach (var friendsListGroup in Model.FriendsListDict)
-        {
-            <div class="row">
-                <div class="col-md-4"><p><label>@friendsListGroup.Key</label></p></div>
-            </div>
-            foreach (var friend in friendsListGroup.Value)
-            {
-                <div class="row">
-                    <div class="col-md-4 p-md-5" ><p>@friend.FirstName @friend.LastName </p></div>
-                </div>
-            }
-        }*@
-                </div>
-            </div>
-        </div>
+        <partial name="_UserDetailsPartial" />
     </div>
     <div class="col-md-9">
         <div class="panel panel-default">
@@ -76,10 +24,15 @@
                     </div>
                     <div class="form-inline">
                         <select id="input_sex" class="form-control">
-                            <option value="select">Set Privacy Level</option>
+                            <option value="select">Select Privacy Level</option>
+                            @foreach (var option in Model.lstPrivacyLevelsModel)
+                            {
+                                <option value="@option.code">@option.value</option>
+                            }
+                            @*<option value="select">Set Privacy Level</option>
                             <option value="public">Public</option>
                             <option value="friends">Friends</option>
-                            <option value="acquaintance">Acquaintance</option>
+                            <option value="acquaintance">Acquaintance</option>*@
                         </select>
 
                         <button type="button" class="btn btn-default btn-success pull-right">Post</button>

@@ -30,13 +30,21 @@ namespace Darknet.Web.Controllers
             string uri = $"{_configOptions.BaseUrl}/api/UserDetails/GetUserDetails?username={username}";
             UserDetailsModel userDetailsModel = await _httpHelper.GetAsync<UserDetailsModel>(uri);
 
+            string plUri = $"{_configOptions.BaseUrl}/api/UserDetails/GetPrivacyLevels";
+            List<PrivacyLevelsModel> lstPrivacyLevelsModel = await _httpHelper.GetAsync<List<PrivacyLevelsModel>>(plUri);
+
             UserDetailsViewModel userDetailsViewModel = new UserDetailsViewModel
             {
                 FirstName = userDetailsModel.FirstName,
                 LastName = userDetailsModel.LastName,
-                Address=userDetailsModel.Address,
-                Mobile=userDetailsModel.Mobile,
-                FriendsListDict = userDetailsModel.Friends.GroupBy(f => f.PrivacyLevel).ToDictionary(g => g.Key, g => g.ToList())
+                Address = userDetailsModel.Address,
+                Mobile = userDetailsModel.Mobile,
+                FriendsListDict = userDetailsModel.Friends
+                    .OrderByDescending(d=>d.PrivacyLevel)
+                    .OrderBy(b => b.FirstName)
+                    .GroupBy(f => f.PrivacyLevel)
+                    .ToDictionary(g => g.Key, g => g.ToList()),
+                lstPrivacyLevelsModel = lstPrivacyLevelsModel
             };
             return View(userDetailsViewModel);
         }

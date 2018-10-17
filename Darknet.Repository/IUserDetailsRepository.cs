@@ -9,5 +9,6 @@ namespace Darknet.Repository
     public interface IUserDetailsRepository
     {
         Task<UserDetailsModel> GetUserDetails(string username);
+        Task<List<PrivacyLevelsModel>> GetPrivacyLevels();
     }
 }

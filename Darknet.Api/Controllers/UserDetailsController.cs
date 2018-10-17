@@ -24,5 +24,13 @@ namespace Darknet.Api.Controllers
             UserDetailsModel userDetailsModel = await _userDetailsRepository.GetUserDetails(username);
             return userDetailsModel;
         }
+
+        [Route("GetPrivacyLevels")]
+        [HttpGet]
+        public async Task<List<PrivacyLevelsModel>> GetPrivacyLevels()
+        {
+            List<PrivacyLevelsModel> lstPrivacyLevelsModel = await _userDetailsRepository.GetPrivacyLevels();
+            return lstPrivacyLevelsModel;
+        }
     }
 }

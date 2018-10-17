@@ -51,5 +51,31 @@ namespace Darknet.Repository
             }
             return userDetailsModel;
         }
+
+        public async Task<List<PrivacyLevelsModel>> GetPrivacyLevels() {
+
+            List<PrivacyLevelsModel> lstPrivacyLevelsModel = new List<PrivacyLevelsModel>();
+            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand("uspGetPrivacyLevels", sqlConnection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+    
+                await sqlConnection.OpenAsync();
+                using (SqlDataReader sqlDataReader = await sqlCommand.ExecuteReaderAsync()) {
+                    while (await sqlDataReader.ReadAsync()) {
+                        if (sqlDataReader.HasRows)
+                        {
+                            lstPrivacyLevelsModel.Add(new PrivacyLevelsModel {
+                                code = (string)sqlDataReader["code"],
+                                value = (string)sqlDataReader["value"]
+                            });
+                        }
+                    };
+                }
+            }
+            return lstPrivacyLevelsModel;
+        }
     }
 }

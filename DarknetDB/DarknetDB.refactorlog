@@ -14,4 +14,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Username" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="a026b85e-4f2c-4a79-a451-8734d97949fd" ChangeDateTime="10/17/2018 08:33:39">
+    <Property Name="ElementName" Value="[dbo].[Posts].[privacyLevel]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Posts]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="privacyLprivacyevel" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="bda9fe9c-258e-410f-b1cf-6275e0ccb055" ChangeDateTime="10/17/2018 08:33:41">
+    <Property Name="ElementName" Value="[dbo].[Posts].[privacyLprivacyevel]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Posts]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="privacy" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d03e1c4c-d858-4bb1-8a5b-4d0e148fe364" ChangeDateTime="10/17/2018 08:34:43">
+    <Property Name="ElementName" Value="[dbo].[FK_Posts_ToUsers]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Posts]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Posts_Users]" />
+  </Operation>
 </Operations>

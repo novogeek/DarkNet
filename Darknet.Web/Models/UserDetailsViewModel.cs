@@ -13,5 +13,6 @@ namespace Darknet.Web.Models
         public string Address { get; set; }
         public string Mobile { get; set; }
         public Dictionary<string,List<Friend>> FriendsListDict { get; set; }
+        public List<PrivacyLevelsModel> lstPrivacyLevelsModel { get; set; }
     }
 }
