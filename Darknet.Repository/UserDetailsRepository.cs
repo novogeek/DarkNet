@@ -77,5 +77,109 @@ namespace Darknet.Repository
             }
             return lstPrivacyLevelsModel;
         }
+
+        public async Task<List<UserPostsModel>> GetAllPermissiblePosts(string loggedInUser)
+        {
+            try
+            {
+                List<UserPostsModel> lstUserPostsModels = new List<UserPostsModel>();
+                using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("uspGetAllPermissiblePosts", sqlConnection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    sqlCommand.Parameters.AddWithValue("@loggedInUser", loggedInUser);
+                    await sqlConnection.OpenAsync();
+                    using (SqlDataReader sqlDataReader = await sqlCommand.ExecuteReaderAsync())
+                    {
+                        while (await sqlDataReader.ReadAsync())
+                        {
+                            if (sqlDataReader.HasRows)
+                            {
+                                lstUserPostsModels.Add(new UserPostsModel
+                                {
+                                    post = (string)sqlDataReader["post"],
+                                    name = (string)sqlDataReader["name"],
+                                    privacy = (string)sqlDataReader["privacy"],
+                                    timestamp = (string)sqlDataReader["timestamp"].ToString(),
+                                });
+                            }
+                        };
+                    }
+                }
+                return lstUserPostsModels;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<UserPostsModel>> GetPostsOfTargetUser(string loggedInUser, string targetUser)
+        {
+            try
+            {
+                List<UserPostsModel> lstUserPostsModels = new List<UserPostsModel>();
+                using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("uspGetPostsOfTargetUser", sqlConnection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    sqlCommand.Parameters.AddWithValue("@loggedInUser", loggedInUser);
+                    sqlCommand.Parameters.AddWithValue("@targetUser", targetUser);
+
+                    await sqlConnection.OpenAsync();
+                    using (SqlDataReader sqlDataReader = await sqlCommand.ExecuteReaderAsync())
+                    {
+                        while (await sqlDataReader.ReadAsync())
+                        {
+                            if (sqlDataReader.HasRows)
+                            {
+                                lstUserPostsModels.Add(new UserPostsModel
+                                {
+                                    post = (string)sqlDataReader["post"],
+                                    name = (string)sqlDataReader["name"],
+                                    privacy = (string)sqlDataReader["privacy"],
+                                    timestamp = (string)sqlDataReader["timestamp"].ToString(),
+                                });
+                            }
+                        };
+                    }
+                }
+                return lstUserPostsModels;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public string AddPost(string username, string post, string privacy)
+        {
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+                {
+                    SqlCommand sqlCommand = new SqlCommand("uspAddPost", sqlConnection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    sqlCommand.Parameters.AddWithValue("@username", username);
+                    sqlCommand.Parameters.AddWithValue("@post", post);
+                    sqlCommand.Parameters.AddWithValue("@privacy", privacy);
+
+                    sqlConnection.Open();
+                    string result = sqlCommand.ExecuteScalar().ToString();
+                    sqlConnection.Close();
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

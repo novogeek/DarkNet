@@ -11,7 +11,7 @@ BEGIN
 		INSERT INTO Posts ([username], [post], [privacy])
 		VALUES
 		(
-			@username, @privacy, @post
+			@username, @post, @privacy
 		)
 		SET @result='success'
 	END

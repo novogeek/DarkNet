@@ -10,5 +10,8 @@ namespace Darknet.Repository
     {
         Task<UserDetailsModel> GetUserDetails(string username);
         Task<List<PrivacyLevelsModel>> GetPrivacyLevels();
+        Task<List<UserPostsModel>> GetAllPermissiblePosts(string loggedInUser);
+        Task<List<UserPostsModel>> GetPostsOfTargetUser(string loggedInUser, string targetUser);
+        string AddPost(string username, string post, string privacy);
     }
 }

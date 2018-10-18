@@ -8,7 +8,6 @@ using Darknet.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Darknet.Utilities;
 using Darknet.Models;
-using Darknet.Web.Models;
 using Microsoft.Extensions.Options;
 
 namespace Darknet.Web.Controllers
@@ -25,29 +24,25 @@ namespace Darknet.Web.Controllers
         }
         public async Task<IActionResult> Index(string username)
         {
-            if (username is null) { username = User.Identity.Name; }
-            string uri = $"{_configOptions.BaseUrl}/api/UserDetails/GetUserDetails?username={username}";
-            UserDetailsModel userDetailsModel = await _httpHelper.GetAsync<UserDetailsModel>(uri);
+            string targetUser = username;
+            string loggedInUser = User.Identity.Name;
+            string uri = $"{_configOptions.BaseUrl}/api/UserDetails/GetUserDetails?loggedInUser={loggedInUser}&targetUser={targetUser}";
 
-            string plUri = $"{_configOptions.BaseUrl}/api/UserDetails/GetPrivacyLevels";
-            List<PrivacyLevelsModel> lstPrivacyLevelsModel = await _httpHelper.GetAsync<List<PrivacyLevelsModel>>(plUri);
-
-            UserDetailsViewModel userDetailsViewModel = new UserDetailsViewModel
-            {
-                FirstName = userDetailsModel.FirstName,
-                LastName = userDetailsModel.LastName,
-                Address = userDetailsModel.Address,
-                Mobile = userDetailsModel.Mobile,
-                FriendsListDict = userDetailsModel.Friends
-                    .OrderByDescending(d=>d.PrivacyLevel)
-                    .ThenBy(b => b.FirstName)
-                    .GroupBy(f => f.PrivacyLevel)
-                    .ToDictionary(g => g.Key, g => g.ToList()),
-                lstPrivacyLevelsModel = lstPrivacyLevelsModel
-            };
+            UserDetailsViewModel userDetailsViewModel = await _httpHelper.GetAsync<UserDetailsViewModel>(uri);
+            
             return View(userDetailsViewModel);
         }
-
+        [HttpPost]
+        public async Task<IActionResult> StatusUpdate([FromForm] AddPostModel addPostModel) {
+            AddPostViewModel addPostViewModel = new AddPostViewModel() {
+                post = addPostModel.post,
+                privacy = addPostModel.privacy,
+                username = User.Identity.Name
+            };
+            string uri = $"{_configOptions.BaseUrl}/api/UserDetails/StatusUpdate";
+            string RegistrationStatus = await _httpHelper.PostAsync<AddPostViewModel, string>(uri, addPostViewModel);
+            return RedirectToAction("Index");
+        }
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

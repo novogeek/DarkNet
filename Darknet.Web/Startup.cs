@@ -68,6 +68,12 @@ namespace Darknet.Web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                   name: "about-route",
+                   template: "profile",
+                   defaults: new { controller = "Home", action = "Index" }
+                );
             });
         }
     }

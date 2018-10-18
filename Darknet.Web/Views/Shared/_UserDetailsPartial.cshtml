@@ -31,7 +31,7 @@
                     @foreach (var friend in friendsListGroup.Value)
                     {
                         //var profileLink = $"/UserDetails/Profile?username={friend.Username}";
-                        var profileLink = $"/Home/Index?username={friend.Username}";
+                        var profileLink = $"/Profile?username={friend.Username}";
                         <li class="customListItem"><a href="@profileLink">@friend.FirstName @friend.LastName</a></li>
                     }
                 </ul>

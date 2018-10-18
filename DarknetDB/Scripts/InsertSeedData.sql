@@ -23,7 +23,6 @@ INSERT INTO [dbo].[Users] ([Username],[Password],[FirstName],[LastName], Mobile,
 GO
 
 GO
-INSERT INTO [dbo].[Config] (Config.category, Config.code, Config.value) VALUES ('privacy', 'pub', 'Public')
 INSERT INTO [dbo].[Config] (Config.category, Config.code, Config.value) VALUES ('privacy', 'frn', 'Friends')
 INSERT INTO [dbo].[Config] (Config.category, Config.code, Config.value) VALUES ('privacy', 'fam', 'Family')
 INSERT INTO [dbo].[Config] (Config.category, Config.code, Config.value) VALUES ('privacy', 'acq', 'Acquaintance')

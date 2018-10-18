@@ -38,7 +38,7 @@ namespace Darknet.Web.Controllers
                 Mobile = userDetailsModel.Mobile,
                 FriendsListDict = userDetailsModel.Friends
                     .OrderByDescending(d => d.PrivacyLevel)
-                    .OrderBy(b=>b.FirstName)
+                    .ThenBy(b => b.FirstName)
                     .GroupBy(f => f.PrivacyLevel)
                     .ToDictionary(g => g.Key, g => g.ToList()),
                 lstPrivacyLevelsModel = lstPrivacyLevelsModel

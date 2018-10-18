@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Darknet.Models;
 
-namespace Darknet.Web.Models
+namespace Darknet.Models
 {
     public class UserDetailsViewModel
     {
@@ -14,5 +14,6 @@ namespace Darknet.Web.Models
         public string Mobile { get; set; }
         public Dictionary<string,List<Friend>> FriendsListDict { get; set; }
         public List<PrivacyLevelsModel> lstPrivacyLevelsModel { get; set; }
+        public List<UserPostsModel> lstUserPostsModels { get; set; }
     }
 }
