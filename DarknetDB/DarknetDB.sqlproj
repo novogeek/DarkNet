@@ -72,7 +72,8 @@
     <Build Include="StoredProcs\UspAddPost.sql" />
     <Build Include="Tables\Posts.sql" />
     <Build Include="StoredProcs\uspGetPrivacyLevels.sql" />
-    <Build Include="StoredProcs\uspGetPosts.sql" />
+    <Build Include="StoredProcs\uspGetPostsOfTargetUser.sql" />
+    <Build Include="StoredProcs\uspGetAllPermissiblePosts.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\InsertSeedData.sql" />

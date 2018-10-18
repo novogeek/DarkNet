@@ -30,18 +30,35 @@ INSERT INTO [dbo].[Config] (Config.category, Config.code, Config.value) VALUES (
 GO
 
 GO
-INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('alice', 'bob', 'acq')
-INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('alice', 'charlie', 'frn')
-INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('alice', 'doe', 'fam')
-INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('alice', 'frank', 'frn')
-INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('alice', 'groot', 'acq')
-
-INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('bob', 'alice', 'frn')
-INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('bob', 'charlie', 'acq')
-INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('bob', 'doe', 'frn')
-INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('bob', 'eve', 'frn')
-INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('bob', 'frank', 'fam')
-INSERT INTO [dbo].[Friends] (Username, FriendName, PrivacyLevel) VALUES ('bob', 'groot', 'fam')
+USE [DarknetDB]
+GO
+INSERT [dbo].[Friends] ([Username], [FriendName], [PrivacyLevel]) VALUES (N'alice', N'bob', N'frn')
+GO
+INSERT [dbo].[Friends] ([Username], [FriendName], [PrivacyLevel]) VALUES (N'bob', N'alice', N'acq')
+GO
+INSERT [dbo].[Friends] ([Username], [FriendName], [PrivacyLevel]) VALUES (N'alice', N'charlie', N'acq')
+GO
+INSERT [dbo].[Friends] ([Username], [FriendName], [PrivacyLevel]) VALUES (N'charlie', N'alice', N'fam')
+GO
+INSERT [dbo].[Friends] ([Username], [FriendName], [PrivacyLevel]) VALUES (N'alice', N'doe', N'frn')
+GO
+INSERT [dbo].[Friends] ([Username], [FriendName], [PrivacyLevel]) VALUES (N'doe', N'alice', N'fam')
+GO
+INSERT [dbo].[Friends] ([Username], [FriendName], [PrivacyLevel]) VALUES (N'alice', N'frank', N'acq')
+GO
+INSERT [dbo].[Friends] ([Username], [FriendName], [PrivacyLevel]) VALUES (N'frank', N'alice', N'fam')
+GO
+INSERT [dbo].[Friends] ([Username], [FriendName], [PrivacyLevel]) VALUES (N'alice', N'groot', N'frn')
+GO
+INSERT [dbo].[Friends] ([Username], [FriendName], [PrivacyLevel]) VALUES (N'groot', N'alice', N'fam')
+GO
+INSERT [dbo].[Friends] ([Username], [FriendName], [PrivacyLevel]) VALUES (N'bob', N'eve', N'frn')
+GO
+INSERT [dbo].[Friends] ([Username], [FriendName], [PrivacyLevel]) VALUES (N'eve', N'bob', N'acq')
+GO
+INSERT [dbo].[Friends] ([Username], [FriendName], [PrivacyLevel]) VALUES (N'bob', N'doe', N'acq')
+GO
+INSERT [dbo].[Friends] ([Username], [FriendName], [PrivacyLevel]) VALUES (N'doe', N'bob', N'acq')
 GO
 
 GO
@@ -56,7 +73,7 @@ INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.time
 INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('bob', 'Malls are great places to shop; I can find everything I need under one roof.', 'frn', '2018-04-13 20:15:31.840')
 
 INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('eve', 'I am happy to take your donation; any amount will be greatly appreciated.', 'frn', '2018-6-14 20:15:31.840')
-INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('eve', 'Christmas is coming!', 'frn', '2018-07-07 20:15:31.840')
+INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('eve', 'Christmas is coming!', 'acq', '2018-07-07 20:15:31.840')
 INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('eve', 'Abstraction is often one floor above you.', 'frn', '2018-05-04 20:15:31.840')
 INSERT INTO [dbo].[Posts] (posts.username, posts.post, posts.privacy, posts.timestamp) VALUES ('eve', 'Tom got a small piece of pie.', 'frn', '2018-04-03 20:17')
 
