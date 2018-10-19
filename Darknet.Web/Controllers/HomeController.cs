@@ -26,10 +26,44 @@ namespace Darknet.Web.Controllers
         {
             string targetUser = username;
             string loggedInUser = User.Identity.Name;
-            string uri = $"{_configOptions.BaseUrl}/api/UserDetails/GetUserDetails?loggedInUser={loggedInUser}&targetUser={targetUser}";
+            string postsUri = "";
+            string userDetailsUri = "";
+            string privacyLevelsUri = "";
 
-            UserDetailsViewModel userDetailsViewModel = await _httpHelper.GetAsync<UserDetailsViewModel>(uri);
-            
+            // If the endpoint is accessed in user profile mode (i.e., the url has the querystring as /Home/Profile?username=..), pickup username param
+            if (!String.IsNullOrEmpty(targetUser))
+            {
+                userDetailsUri = $"{_configOptions.BaseUrl}/api/UserDetailsApi/GetUserDetails?username={targetUser}";
+                postsUri = $"{_configOptions.BaseUrl}/api/UserDetailsApi/GetPostsOfTargetUser?loggedInUser={loggedInUser}&targetUser={targetUser}";
+            }
+            // If the endpoint is accessed as home page (i.e., /Home/Index), pick up loggedInUser
+            else
+            {
+                userDetailsUri = $"{_configOptions.BaseUrl}/api/UserDetailsApi/GetUserDetails?username={loggedInUser}";
+                postsUri = $"{_configOptions.BaseUrl}/api/UserDetailsApi/GetAllPermissiblePosts?loggedInUser={loggedInUser}";
+            }
+
+            privacyLevelsUri = $"{_configOptions.BaseUrl}/api/UserDetailsApi/GetPrivacyLevels";
+
+            UserDetailsModel userDetailsModel = await _httpHelper.GetAsync<UserDetailsModel>(userDetailsUri);
+            List<UserPostsModel> lstUserPostsModel = await _httpHelper.GetAsync<List<UserPostsModel>>(postsUri);
+            List<PrivacyLevelsModel> lstPrivacyLevelsModel = await _httpHelper.GetAsync<List<PrivacyLevelsModel>>(privacyLevelsUri);
+
+            UserDetailsViewModel userDetailsViewModel = new UserDetailsViewModel
+            {
+                FirstName = userDetailsModel.FirstName,
+                LastName = userDetailsModel.LastName,
+                Address = userDetailsModel.Address,
+                Mobile = userDetailsModel.Mobile,
+                FriendsListDict = userDetailsModel.Friends
+                    .OrderByDescending(d => d.PrivacyLevel)
+                    .ThenBy(b => b.FirstName)
+                    .GroupBy(f => f.PrivacyLevel)
+                    .ToDictionary(g => g.Key, g => g.ToList()),
+                lstPrivacyLevelsModel = lstPrivacyLevelsModel,
+                lstUserPostsModels = lstUserPostsModel
+            };
+
             return View(userDetailsViewModel);
         }
         [HttpPost]
@@ -39,7 +73,7 @@ namespace Darknet.Web.Controllers
                 privacy = addPostModel.privacy,
                 username = User.Identity.Name
             };
-            string uri = $"{_configOptions.BaseUrl}/api/UserDetails/StatusUpdate";
+            string uri = $"{_configOptions.BaseUrl}/api/UserDetailsApi/StatusUpdate";
             string RegistrationStatus = await _httpHelper.PostAsync<AddPostViewModel, string>(uri, addPostViewModel);
             return RedirectToAction("Index");
         }

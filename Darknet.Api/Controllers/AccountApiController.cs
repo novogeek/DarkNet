@@ -12,10 +12,10 @@ namespace Darknet.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountApiController : ControllerBase
     {
         IAccountRepository _userRepository;
-        public AccountController(IAccountRepository userRepository) {
+        public AccountApiController(IAccountRepository userRepository) {
             _userRepository = userRepository;
         }
 

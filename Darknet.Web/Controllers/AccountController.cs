@@ -32,7 +32,7 @@ namespace Darknet.Web.Controllers
         public async Task<IActionResult> RegisterUser([Bind] UserRegistrationModel userRegistrationModel) {
             if (ModelState.IsValid)
             {
-                string uri = $"{_configOptions.BaseUrl}/api/Account/RegisterUser";
+                string uri = $"{_configOptions.BaseUrl}/api/AccountApi/RegisterUser";
                 string RegistrationStatus = await _httpHelper.PostAsync<UserRegistrationModel, string>(uri, userRegistrationModel);
                 if (RegistrationStatus == "success")
                 {
@@ -58,7 +58,7 @@ namespace Darknet.Web.Controllers
         public async Task<IActionResult> Login([Bind] UserCredentialsModel userCredentialsModel) {
             if (ModelState.IsValid)
             {
-                string uri = $"{_configOptions.BaseUrl}/api/Account/AuthenticateUser";
+                string uri = $"{_configOptions.BaseUrl}/api/AccountApi/AuthenticateUser";
                 string LoginStatus = await _httpHelper.PostAsync<UserCredentialsModel, string>(uri, userCredentialsModel);
 
                 if (LoginStatus == "success")
