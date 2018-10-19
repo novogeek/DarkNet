@@ -2,7 +2,7 @@
 {
 <ul class="nav navbar-nav">
     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-    @*<li><a id="profile-link" href="/UserDetails/Profile">Profile</a></li>*@
+    <li><a id="profile-link" href="/Profile?username=@User.Identity.Name">Profile</a></li>
 </ul>
     <ul class="nav navbar-nav navbar-right">
         <li>
