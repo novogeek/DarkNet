@@ -10,5 +10,6 @@ namespace Darknet.Utilities
         Task<V> PostAsync<T, V>(string uri, T obj);
 
         Task<V> GetAsync<V>(string uri);
+        void AddBearerToken(string token);
     }
 }

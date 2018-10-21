@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Darknet.Utilities;
 using Darknet.Models;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Http;
 
 namespace Darknet.Web.Controllers
 {
@@ -17,10 +18,12 @@ namespace Darknet.Web.Controllers
     {
         IHttpHelper _httpHelper;
         ConfigOptions _configOptions;
-        public HomeController(IHttpHelper httpHelper, IOptions<ConfigOptions> configOptions)
+        //DIStore _diStore;
+        public HomeController(IHttpHelper httpHelper, IOptions<ConfigOptions> configOptions, DIStore diStore)
         {
             _httpHelper = httpHelper;
             _configOptions = configOptions.Value;
+            _httpHelper.AddBearerToken(diStore.token);
         }
         public async Task<IActionResult> Index(string username)
         {
@@ -33,17 +36,17 @@ namespace Darknet.Web.Controllers
             // If the endpoint is accessed in user profile mode (i.e., the url has the querystring as /Home/Profile?username=..), pickup username param
             if (!String.IsNullOrEmpty(targetUser))
             {
-                userDetailsUri = $"{_configOptions.BaseUrl}/api/UserDetailsApi/GetUserDetails?username={targetUser}";
-                postsUri = $"{_configOptions.BaseUrl}/api/UserDetailsApi/GetPostsOfTargetUser?loggedInUser={loggedInUser}&targetUser={targetUser}";
+                userDetailsUri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/GetUserDetails?username={targetUser}";
+                postsUri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/GetPostsOfTargetUser?loggedInUser={loggedInUser}&targetUser={targetUser}";
             }
             // If the endpoint is accessed as home page (i.e., /Home/Index), pick up loggedInUser
             else
             {
-                userDetailsUri = $"{_configOptions.BaseUrl}/api/UserDetailsApi/GetUserDetails?username={loggedInUser}";
-                postsUri = $"{_configOptions.BaseUrl}/api/UserDetailsApi/GetAllPermissiblePosts?loggedInUser={loggedInUser}";
+                userDetailsUri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/GetUserDetails?username={loggedInUser}";
+                postsUri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/GetAllPermissiblePosts?loggedInUser={loggedInUser}";
             }
 
-            privacyLevelsUri = $"{_configOptions.BaseUrl}/api/UserDetailsApi/GetPrivacyLevels";
+            privacyLevelsUri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/GetPrivacyLevels";
 
             UserDetailsModel userDetailsModel = await _httpHelper.GetAsync<UserDetailsModel>(userDetailsUri);
             List<UserPostsModel> lstUserPostsModel = await _httpHelper.GetAsync<List<UserPostsModel>>(postsUri);
@@ -73,7 +76,7 @@ namespace Darknet.Web.Controllers
                 privacy = addPostModel.privacy,
                 username = User.Identity.Name
             };
-            string uri = $"{_configOptions.BaseUrl}/api/UserDetailsApi/StatusUpdate";
+            string uri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/StatusUpdate";
             string RegistrationStatus = await _httpHelper.PostAsync<AddPostViewModel, string>(uri, addPostViewModel);
             return RedirectToAction("Index");
         }

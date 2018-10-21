@@ -11,6 +11,7 @@ namespace Darknet.Utilities
     public class HttpHelper : IHttpHelper
     {
         HttpClient httpClient;
+        string _token = "";
         public HttpHelper()
         {
             httpClient = new HttpClient();
@@ -18,11 +19,14 @@ namespace Darknet.Utilities
             httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
-
-        public async Task<V> PostAsync<T, V>(string uri, T obj)
+        public void AddBearerToken(string token) {
+            _token = token;
+        }
+        public async Task<V> PostAsync<T, V>( string uri, T obj)
         {
             var json = JsonConvert.SerializeObject(obj);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
             HttpResponseMessage response = await httpClient.PostAsync(uri, content);
             if (response.IsSuccessStatusCode)
             {
@@ -37,6 +41,7 @@ namespace Darknet.Utilities
 
         public async Task<V> GetAsync<V>(string uri)
         {
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
             HttpResponseMessage response = await httpClient.GetAsync(uri);
             if (response.IsSuccessStatusCode)
             {
