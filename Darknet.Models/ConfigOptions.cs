@@ -8,5 +8,6 @@ namespace Darknet.Models
     {
         public string BaseUrl { get; set; }
         public string IdpLoginUrl { get; set; }
+        public string SigningKey { get; set; }
     }
 }

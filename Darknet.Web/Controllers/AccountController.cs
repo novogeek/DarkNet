@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Darknet.Models;
 using Darknet.Utilities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Darknet.Web.Controllers
 {
@@ -57,8 +60,24 @@ namespace Darknet.Web.Controllers
             // return View();
         }
         [HttpPost]
-        public IActionResult Session([FromForm] string token) {
-            return View();
+        public async Task<IActionResult> Session([FromForm] string token) {
+            ClaimsPrincipal principal = ValidateToken(token);
+            await HttpContext.SignInAsync(principal);
+            return RedirectToAction("Index", "Home");
+        }
+        private ClaimsPrincipal ValidateToken(string token) {
+            var signingKey = Encoding.ASCII.GetBytes(_configOptions.SigningKey);
+            SecurityToken validatedToken;
+            TokenValidationParameters validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(signingKey),
+                ValidateIssuer = false,
+                ValidateAudience = false
+            };
+
+            ClaimsPrincipal principal = new JwtSecurityTokenHandler().ValidateToken(token, validationParameters, out validatedToken);
+            return principal;
         }
 
         [HttpPost]
