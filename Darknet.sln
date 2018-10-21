@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Darknet.Repository", "Darkn
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DarknetDB", "DarknetDB\DarknetDB.sqlproj", "{66840132-3024-4642-8236-078D8B3D5E69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Darknet.Utilities", "Darknet.Utilities\Darknet.Utilities.csproj", "{FEA4432D-BBCE-4F5E-A73F-29E6B26B1C87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Darknet.Utilities", "Darknet.Utilities\Darknet.Utilities.csproj", "{FEA4432D-BBCE-4F5E-A73F-29E6B26B1C87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DarkNet.IDP", "DarkNet.IDP\DarkNet.IDP.csproj", "{A504DC9F-81CC-4BCE-9B3C-C308D9E20CBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{FEA4432D-BBCE-4F5E-A73F-29E6B26B1C87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEA4432D-BBCE-4F5E-A73F-29E6B26B1C87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEA4432D-BBCE-4F5E-A73F-29E6B26B1C87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A504DC9F-81CC-4BCE-9B3C-C308D9E20CBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A504DC9F-81CC-4BCE-9B3C-C308D9E20CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A504DC9F-81CC-4BCE-9B3C-C308D9E20CBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A504DC9F-81CC-4BCE-9B3C-C308D9E20CBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

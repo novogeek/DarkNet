@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "Darknet IDP Home Page";
+}
+
+
+<div class="jumbotron">
+    <div class="text-center">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <h2 class="text-center">Hello, @User.Identity.Name.ToUpper()! </h2>
+        }
+        else
+        {
+            <h2 class="text-center">Hello, Anonymous User! </h2>
+        }
+        <h3>Welcome the DarkNet IDP (Identity Provider)</h3>
+
+    </div>
+</div>
+<div class="hidden">
+    @{
+        var returnUrl = Context.Session.GetString("returnUrl") != null ? Context.Session.GetString("returnUrl") : "";
+        var token = Context.Session.GetString("token") != null ? Context.Session.GetString("token") : "";
+        <form id="frmPostToken" method="post" action="@returnUrl">
+            <input type="hidden" id="hdnToken" name="token" value="@token" />
+        </form>
+    }
+
+    <script type="text/javascript">
+        window.onload = function () {
+            var token = document.getElementById('hdnToken').value;
+            var postUrl = document.getElementById('frmPostToken').attributes["action"].value;
+            if (token && postUrl) {
+                console.log('Posting form to relying party...');
+                document.forms[0].submit();
+            }
+            else {
+                console.log('Empty Token/Return URL. Form will not be posted to relying party.');
+            }
+        };
+    </script>
+
+</div>
+

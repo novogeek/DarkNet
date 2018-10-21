@@ -7,5 +7,6 @@ namespace Darknet.Models
     public class ConfigOptions
     {
         public string BaseUrl { get; set; }
+        public string IdpLoginUrl { get; set; }
     }
 }

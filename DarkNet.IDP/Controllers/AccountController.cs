@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Darknet.IDP.Models;
 using Darknet.Models;
-using Darknet.Utilities;
+using Darknet.Repository;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -13,10 +15,11 @@ namespace Darknet.Web.Controllers
 {
     public class AccountController : Controller
     {
-        IHttpHelper _httpHelper;
-        ConfigOptions _configOptions;
-        public AccountController(IHttpHelper httpHelper, IOptions<ConfigOptions> configOptions) {
-            _httpHelper = httpHelper;
+        IdpConfigOptions _configOptions;
+        IAccountRepository _accountRepository;
+
+        public AccountController(IAccountRepository accountRepository, IOptions<IdpConfigOptions> configOptions) {
+            _accountRepository = accountRepository;
             _configOptions = configOptions.Value;
         }
         public IActionResult Index()
@@ -29,12 +32,13 @@ namespace Darknet.Web.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> RegisterUser([Bind] UserRegistrationModel userRegistrationModel) {
+        public IActionResult RegisterUser([Bind] UserRegistrationModel userRegistrationModel) {
             if (ModelState.IsValid)
             {
-                string uri = $"{_configOptions.BaseUrl}/api/AccountApi/RegisterUser";
-                string RegistrationStatus = await _httpHelper.PostAsync<UserRegistrationModel, string>(uri, userRegistrationModel);
-                if (RegistrationStatus == "success")
+                string statusMsg = "";
+                statusMsg = _accountRepository.RegisterUser(userRegistrationModel);
+
+                if (statusMsg == "success")
                 {
                     ModelState.Clear();
                     TempData["success"] = "Registration Successful!";
@@ -52,23 +56,16 @@ namespace Darknet.Web.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            string IdpUrlWithReturnUrl = $"{ _configOptions.IdpLoginUrl}?returnUrl={_configOptions.BaseUrl}/Account/Session";
-            return Redirect(IdpUrlWithReturnUrl);
-            // return View();
-        }
-        [HttpPost]
-        public IActionResult Session([FromForm] string token) {
             return View();
         }
-
         [HttpPost]
-        public async Task<IActionResult> Login([Bind] UserCredentialsModel userCredentialsModel) {
+        public async Task<IActionResult> Login([Bind] UserCredentialsModel userCredentialsModel, string returnUrl = "") {
             if (ModelState.IsValid)
             {
-                string uri = $"{_configOptions.BaseUrl}/api/AccountApi/AuthenticateUser";
-                string LoginStatus = await _httpHelper.PostAsync<UserCredentialsModel, string>(uri, userCredentialsModel);
+                string statusMsg = "";
+                statusMsg = _accountRepository.AuthenticateUser(userCredentialsModel);
 
-                if (LoginStatus == "success")
+                if (statusMsg == "success")
                 {
                     var claims = new List<Claim>
                     {
@@ -78,6 +75,8 @@ namespace Darknet.Web.Controllers
                     ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
 
                     await HttpContext.SignInAsync(principal);
+                    HttpContext.Session.SetString("token", "testToken");
+                    HttpContext.Session.SetString("returnUrl", String.IsNullOrEmpty(returnUrl)?"":returnUrl);
                     return RedirectToAction("Index", "Home");
                 }
                 else

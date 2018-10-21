@@ -9,11 +9,11 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Darknet.IDP.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Darknet.Utilities;
-using Darknet.Models;
+using Darknet.Repository;
 
-namespace Darknet.Web
+namespace DarkNet.IDP
 {
     public class Startup
     {
@@ -27,7 +27,7 @@ namespace Darknet.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddTransient<IAccountRepository>(s => { return new AccountRepository(Configuration["settings:DbConnectionString"]); });
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
                     options => {
@@ -37,11 +37,21 @@ namespace Darknet.Web
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.Configure<ConfigOptions>(Configuration.GetSection("settings"));
-            services.AddTransient<IHttpHelper, HttpHelper>();
+
+            services.Configure<IdpConfigOptions>(Configuration.GetSection("settings"));
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -62,6 +72,7 @@ namespace Darknet.Web
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseSession();
             app.UseAuthentication();
 
             app.UseMvc(routes =>
@@ -69,12 +80,6 @@ namespace Darknet.Web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-
-                routes.MapRoute(
-                   name: "about-route",
-                   template: "profile",
-                   defaults: new { controller = "Home", action = "Index" }
-                );
             });
         }
     }
