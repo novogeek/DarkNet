@@ -14,6 +14,6 @@ namespace Darknet.Models
     {
         public string post { get; set; }
         public string privacy { get; set; }
-        public string username { get; set; }
+        //public string username { get; set; }
     }
 }

@@ -22,10 +22,10 @@ namespace Darknet.Api.Controllers
 
         [Route("GetUserDetails")]
         [HttpGet]
-        public async Task<UserDetailsModel> GetUserDetails(string username) {
-            string _username = User.Identity.Name;
+        public async Task<UserDetailsModel> GetUserDetails(string username = "") {
             UserDetailsModel userDetailsModel;
-            userDetailsModel = await _userDetailsRepository.GetUserDetails(_username);
+            if (String.IsNullOrEmpty(username)){ username = User.Identity.Name; };
+            userDetailsModel = await _userDetailsRepository.GetUserDetails(username);
             return userDetailsModel;
         }
 
@@ -33,7 +33,8 @@ namespace Darknet.Api.Controllers
         [HttpPost]
         public string StatusUpdate(AddPostViewModel addPostViewModel)
         {
-            string result = _userDetailsRepository.AddPost(addPostViewModel.username, addPostViewModel.post, addPostViewModel.privacy);
+            string loggedInUser = User.Identity.Name;
+            string result = _userDetailsRepository.AddPost(loggedInUser, addPostViewModel.post, addPostViewModel.privacy);
             return result;
         }
 
@@ -48,16 +49,18 @@ namespace Darknet.Api.Controllers
 
         [Route("GetAllPermissiblePosts")]
         [HttpGet]
-        public async Task<List<UserPostsModel>> GetAllPermissiblePosts(string loggedInUser)
+        public async Task<List<UserPostsModel>> GetAllPermissiblePosts()
         {
+            string loggedInUser = User.Identity.Name;
             List<UserPostsModel> lstUserPostsModels = await _userDetailsRepository.GetAllPermissiblePosts(loggedInUser);
             return lstUserPostsModels;
         }
 
         [Route("GetPostsOfTargetUser")]
         [HttpGet]
-        public async Task<List<UserPostsModel>> GetPostsOfTargetUser(string loggedInUser, string targetUser)
+        public async Task<List<UserPostsModel>> GetPostsOfTargetUser(string targetUser)
         {
+            string loggedInUser = User.Identity.Name;
             List<UserPostsModel> lstUserPostsModels = await _userDetailsRepository.GetPostsOfTargetUser(loggedInUser, targetUser);
             return lstUserPostsModels;
         }

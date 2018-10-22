@@ -37,13 +37,13 @@ namespace Darknet.Web.Controllers
             if (!String.IsNullOrEmpty(targetUser))
             {
                 userDetailsUri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/GetUserDetails?username={targetUser}";
-                postsUri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/GetPostsOfTargetUser?loggedInUser={loggedInUser}&targetUser={targetUser}";
+                postsUri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/GetPostsOfTargetUser?targetUser={targetUser}";
             }
-            // If the endpoint is accessed as home page (i.e., /Home/Index), pick up loggedInUser
+            // If the endpoint is accessed as home page (i.e., /Home/Index), pick up loggedInUser from JWT in the API
             else
             {
-                userDetailsUri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/GetUserDetails?username={loggedInUser}";
-                postsUri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/GetAllPermissiblePosts?loggedInUser={loggedInUser}";
+                userDetailsUri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/GetUserDetails";
+                postsUri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/GetAllPermissiblePosts";
             }
 
             privacyLevelsUri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/GetPrivacyLevels";
@@ -73,8 +73,7 @@ namespace Darknet.Web.Controllers
         public async Task<IActionResult> StatusUpdate([FromForm] AddPostModel addPostModel) {
             AddPostViewModel addPostViewModel = new AddPostViewModel() {
                 post = addPostModel.post,
-                privacy = addPostModel.privacy,
-                username = User.Identity.Name
+                privacy = addPostModel.privacy
             };
             string uri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/StatusUpdate";
             string RegistrationStatus = await _httpHelper.PostAsync<AddPostViewModel, string>(uri, addPostViewModel);
