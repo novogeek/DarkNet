@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Darknet.Models;
 using Darknet.Repository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Darknet.Api.Controllers
-{ 
+{
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserDetailsApiController : ControllerBase
@@ -21,8 +23,9 @@ namespace Darknet.Api.Controllers
         [Route("GetUserDetails")]
         [HttpGet]
         public async Task<UserDetailsModel> GetUserDetails(string username) {
+            string _username = User.Identity.Name;
             UserDetailsModel userDetailsModel;
-            userDetailsModel = await _userDetailsRepository.GetUserDetails(username);
+            userDetailsModel = await _userDetailsRepository.GetUserDetails(_username);
             return userDetailsModel;
         }
 
