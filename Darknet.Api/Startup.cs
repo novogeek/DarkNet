@@ -34,6 +34,7 @@ namespace Darknet.Api
             string signingKey = Configuration["ConnectionStrings:signingKey"];
             byte[] signingKeyBytes = Encoding.ASCII.GetBytes(signingKey);
 
+            services.AddCors();
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -79,7 +80,7 @@ namespace Darknet.Api
             {
                 app.UseHsts();
             }
-
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();

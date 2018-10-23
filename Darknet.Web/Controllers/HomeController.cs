@@ -69,6 +69,7 @@ namespace Darknet.Web.Controllers
             };
             ViewData["ImpersonationIDPUrl"] = _configOptions.IdpImpersonationUrl;
             ViewData["ImpersonationRetUrl"] = $"returnUrl={_configOptions.WebBaseUrl}/Account/Implicit";
+            ViewData["ApiBaseUrl"] = _configOptions.ApiBaseUrl;
             return View(userDetailsViewModel);
         }
         [HttpPost]
