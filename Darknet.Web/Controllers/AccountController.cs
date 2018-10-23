@@ -64,7 +64,8 @@ namespace Darknet.Web.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> CodeGrant([FromForm] string token) {
-            _diStore.token = token;
+            //_diStore.token = token;
+            HttpContext.Session.SetString("token", token);
             ClaimsPrincipal principal = ProcessToken(token);
             await HttpContext.SignInAsync(principal);
             return RedirectToAction("Index", "Home");
@@ -122,7 +123,7 @@ namespace Darknet.Web.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Login", "Account");
+            return Redirect(_configOptions.IdpLogoutUrl);
         }
         [HttpGet]
         public IActionResult Forbidden()

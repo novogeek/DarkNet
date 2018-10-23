@@ -49,7 +49,6 @@ namespace DarkNet.IDP
             services.AddSession(options =>
             {
                 options.Cookie.Name = "IdpSessionCookie";
-                options.IdleTimeout = TimeSpan.FromMinutes(10);
                 options.Cookie.HttpOnly = true;
             });
 

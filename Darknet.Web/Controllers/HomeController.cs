@@ -19,11 +19,15 @@ namespace Darknet.Web.Controllers
         IHttpHelper _httpHelper;
         ConfigOptions _configOptions;
         //DIStore _diStore;
-        public HomeController(IHttpHelper httpHelper, IOptions<ConfigOptions> configOptions, DIStore diStore)
+        public HomeController(IHttpHelper httpHelper, IOptions<ConfigOptions> configOptions, DIStore diStore, IHttpContextAccessor httpContextAccessor)
         {
             _httpHelper = httpHelper;
             _configOptions = configOptions.Value;
-            _httpHelper.AddBearerToken(diStore.token);
+            var httpContext = httpContextAccessor.HttpContext;
+            //_httpHelper.AddBearerToken(diStore.token);
+            if (!String.IsNullOrEmpty(httpContext?.Session?.GetString("token"))) {
+                _httpHelper.AddBearerToken(httpContext.Session.GetString("token"));
+            }
         }
         public async Task<IActionResult> Index(string username)
         {
@@ -33,8 +37,12 @@ namespace Darknet.Web.Controllers
             string userDetailsUri = "";
             string privacyLevelsUri = "";
 
-            // If the endpoint is accessed in user profile mode (i.e., the url has the querystring as /Home/Profile?username=..), pickup username param
-            if (!String.IsNullOrEmpty(targetUser))
+            if (String.IsNullOrEmpty(HttpContext?.Session?.GetString("token"))) {
+                return RedirectToAction("Logout", "Account");
+            }
+
+                // If the endpoint is accessed in user profile mode (i.e., the url has the querystring as /Home/Profile?username=..), pickup username param
+                if (!String.IsNullOrEmpty(targetUser))
             {
                 userDetailsUri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/GetUserDetails?username={targetUser}";
                 postsUri = $"{_configOptions.ApiBaseUrl}/api/UserDetailsApi/GetPostsOfTargetUser?targetUser={targetUser}";

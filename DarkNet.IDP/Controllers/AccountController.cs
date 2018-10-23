@@ -136,7 +136,7 @@ namespace Darknet.Web.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Login", "Account");
+            return View();
         }
         [HttpGet]
         public IActionResult Forbidden()
