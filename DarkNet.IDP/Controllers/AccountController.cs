@@ -60,7 +60,13 @@ namespace Darknet.Web.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else {
+                return View();
+            }
         }
         [HttpPost]
         public async Task<IActionResult> Login([Bind] UserCredentialsModel userCredentialsModel, string returnUrl = "") {
@@ -103,7 +109,7 @@ namespace Darknet.Web.Controllers
             else
                 return View();
         }
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public ActionResult GetImpersonationToken(string username, string returnUrl = "") {
             string jwt= CreateJwtForRelyingParty(username);

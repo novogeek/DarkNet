@@ -31,6 +31,7 @@ namespace DarkNet.IDP
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
                     options => {
+                        options.Cookie.Name = "IdpCookie";
                         options.LoginPath = new PathString("/Account/Login");
                         options.AccessDeniedPath = new PathString("/Account/Forbidden");
                     });
@@ -47,6 +48,7 @@ namespace DarkNet.IDP
 
             services.AddSession(options =>
             {
+                options.Cookie.Name = "IdpSessionCookie";
                 options.IdleTimeout = TimeSpan.FromMinutes(10);
                 options.Cookie.HttpOnly = true;
             });

@@ -16,7 +16,19 @@ $(function () {
         iframe.on('load', () => {
             var newHref = document.getElementById('frmImplicit').contentWindow.location.href;
             let params = (new URL(newHref)).searchParams;
-            console.log('token:', params.get('token'));
+            var token = params.get('token');
+            console.log('token:', token);
+
+            //$.ajax({
+            //    url: 'https://api.sandbox.slcedu.org/api/rest/v1/students/test1',
+            //    type: 'GET',
+            //    beforeSend: function (xhr) {
+            //        xhr.setRequestHeader('Authorization', 'Bearer '+token);
+            //    },
+            //    data: {},
+            //    success: function () { },
+            //    error: function () { },
+            //});
         });
     }
     getToken();

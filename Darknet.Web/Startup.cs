@@ -31,6 +31,7 @@ namespace Darknet.Web
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
                     options => {
+                        options.Cookie.Name = "RpCookie";
                         options.LoginPath = new PathString("/Account/Login");
                         options.AccessDeniedPath = new PathString("/Account/Forbidden");
                     });
