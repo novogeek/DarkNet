@@ -46,25 +46,50 @@
                     </form>
                 </div>
             </div>
-        }
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Posts</h3>
-            </div>
-        </div>
-        @foreach (var post in Model.lstUserPostsModels)
-        {
-        <div class="panel panel-default">
-            <div class="panel-heading"><h3 class="panel-title">@post.name</h3></div>
-            <div class="panel-body">
-                <div>@post.post</div>
-                <hr class="customHr">
-                <div>
-                    <span>Privacy: @post.privacy</span>
-                    <span class="pull-right">Posted on: @post.timestamp</span>
+
+            <div class="panel panel-default">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Posts</h4>
+                    <div class="form-inline pull-right">
+                        <span>View As: </span>
+                        <select id="ddFriends" name="privacy" class="form-control">
+                            <option value="select">Select</option>
+                            @foreach (var option in Model.lstFriends)
+                            {
+                                <option value="@option.Username">@option.FirstName @option.LastName</option>
+                            }
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Posts</h4>
+                </div>
+            </div>
+        }
+
+        @foreach (var post in Model.lstUserPostsModels)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title">@post.name</h3></div>
+                <div class="panel-body">
+                    <div>@post.post</div>
+                    <hr class="customHr">
+                    <div>
+                        <span>Privacy: @post.privacy</span>
+                        <span class="pull-right">Posted on: @post.timestamp</span>
+                    </div>
+                </div>
+            </div>
         }
     </div>
+</div>
+<div id="divHdn" class="hidden">
+    <input type="hidden" id="hdnImpersonationIDPUrl" value=@ViewData["ImpersonationIDPUrl"] />
+    <input type="hidden" id="hdnImpersonationRetUrl" value=@ViewData["ImpersonationRetUrl"] />
+    <iframe id="frmImplicit" src="" width="0" height="0"></iframe>
 </div>

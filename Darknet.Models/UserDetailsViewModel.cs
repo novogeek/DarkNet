@@ -15,5 +15,7 @@ namespace Darknet.Models
         public Dictionary<string,List<Friend>> FriendsListDict { get; set; }
         public List<PrivacyLevelsModel> lstPrivacyLevelsModel { get; set; }
         public List<UserPostsModel> lstUserPostsModels { get; set; }
+        public List<Friend> lstFriends { get; set; }
+
     }
 }

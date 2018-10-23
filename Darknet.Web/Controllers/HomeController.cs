@@ -64,9 +64,11 @@ namespace Darknet.Web.Controllers
                     .GroupBy(f => f.PrivacyLevel)
                     .ToDictionary(g => g.Key, g => g.ToList()),
                 lstPrivacyLevelsModel = lstPrivacyLevelsModel,
-                lstUserPostsModels = lstUserPostsModel
+                lstUserPostsModels = lstUserPostsModel,
+                lstFriends = userDetailsModel.Friends
             };
-
+            ViewData["ImpersonationIDPUrl"] = _configOptions.IdpImpersonationUrl;
+            ViewData["ImpersonationRetUrl"] = $"returnUrl={_configOptions.WebBaseUrl}/Account/Implicit";
             return View(userDetailsViewModel);
         }
         [HttpPost]

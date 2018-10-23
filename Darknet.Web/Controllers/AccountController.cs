@@ -58,17 +58,22 @@ namespace Darknet.Web.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            string IdpUrlWithReturnUrl = $"{ _configOptions.IdpLoginUrl}?returnUrl={_configOptions.WebBaseUrl}/Account/Session";
+            string IdpUrlWithReturnUrl = $"{ _configOptions.IdpLoginUrl}?returnUrl={_configOptions.WebBaseUrl}/Account/CodeGrant";
             return Redirect(IdpUrlWithReturnUrl);
             // return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Session([FromForm] string token) {
+        public async Task<IActionResult> CodeGrant([FromForm] string token) {
             _diStore.token = token;
             ClaimsPrincipal principal = ProcessToken(token);
             await HttpContext.SignInAsync(principal);
             return RedirectToAction("Index", "Home");
         }
+        public ActionResult Implicit(string token) {
+            ViewData["token"] = token;
+            return View();
+        }
+
         private ClaimsPrincipal ProcessToken(string token) {
             var signingKey = Encoding.ASCII.GetBytes(_configOptions.SigningKey);
             SecurityToken validatedToken;

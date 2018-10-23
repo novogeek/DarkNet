@@ -9,6 +9,7 @@ namespace Darknet.Models
         public string WebBaseUrl { get; set; }
         public string ApiBaseUrl { get; set; }
         public string IdpLoginUrl { get; set; }
+        public string IdpImpersonationUrl { get; set; }
         public string SigningKey { get; set; }
     }
 }

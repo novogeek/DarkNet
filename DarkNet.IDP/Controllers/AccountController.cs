@@ -9,6 +9,7 @@ using Darknet.IDP.Models;
 using Darknet.Models;
 using Darknet.Repository;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -80,12 +81,18 @@ namespace Darknet.Web.Controllers
                     // sign into IDP
                     await HttpContext.SignInAsync(principal);
 
-                    // create JWT for Relying party
-                    string jwt = CreateJwtForRelyingParty(userCredentialsModel.Username);
+                    if (Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else {
+                        // create JWT for Relying party
+                        string jwt = CreateJwtForRelyingParty(userCredentialsModel.Username);
 
-                    HttpContext.Session.SetString("token", jwt);
-                    HttpContext.Session.SetString("returnUrl", String.IsNullOrEmpty(returnUrl)?"":returnUrl);
-                    return RedirectToAction("Index", "Home");
+                        HttpContext.Session.SetString("token", jwt);
+                        HttpContext.Session.SetString("returnUrl", String.IsNullOrEmpty(returnUrl) ? "" : returnUrl);
+                        return RedirectToAction("Index", "Home", new { redirect = "true" });
+                    }
                 }
                 else
                 {
@@ -95,6 +102,13 @@ namespace Darknet.Web.Controllers
             }
             else
                 return View();
+        }
+        //[Authorize]
+        [HttpGet]
+        public ActionResult GetImpersonationToken(string username, string returnUrl = "") {
+            string jwt= CreateJwtForRelyingParty(username);
+            string url = $"{returnUrl}?token={jwt}";
+            return Redirect(url);
         }
 
         private string CreateJwtForRelyingParty(string username) {

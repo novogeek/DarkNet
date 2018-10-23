@@ -65,5 +65,13 @@ namespace Darknet.Api.Controllers
             return lstUserPostsModels;
         }
 
+        [Route("ViewPostsAsImpersonatedUser")]
+        [HttpGet]
+        public async Task<List<UserPostsModel>> ViewPostsAsImpersonatedUser(string targetUser)
+        {
+            string loggedInUser = User.Identity.Name;
+            List<UserPostsModel> lstUserPostsModels = await _userDetailsRepository.GetPostsOfTargetUser(targetUser, loggedInUser);
+            return lstUserPostsModels;
+        }
     }
 }

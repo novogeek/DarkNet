@@ -29,14 +29,18 @@
 
     <script type="text/javascript">
         window.onload = function () {
+            let params = (new URL(document.location)).searchParams;
             var token = document.getElementById('hdnToken').value;
             var postUrl = document.getElementById('frmPostToken').attributes["action"].value;
-            if (token && postUrl) {
-                console.log('Posting form to relying party...');
-                document.forms[0].submit();
-            }
-            else {
-                console.log('Empty Token/Return URL. Form will not be posted to relying party.');
+            console.log(postUrl + ' :: ' + token);
+            if (params.has("redirect")) {
+                if (token && postUrl) {
+                    console.log('Posting form to relying party...');
+                    document.forms[0].submit();
+                }
+                else {
+                    console.log('Empty Token/Return URL. Form will not be posted to relying party.');
+                }
             }
         };
     </script>
