@@ -12,6 +12,7 @@ $(function () {
         var loggedInUser = $('#hdnloggedInUser').val();
 
         $("#ddFriends").change(function () {
+            $("#divPosts").html('Fetching posts...');
             var user = $('option:selected', this).val();
             var idpTokenUrl = idpUrl + '?username=' + user + '&' + idpRetUrl;
             iframe.attr('src', idpTokenUrl);
@@ -30,8 +31,10 @@ $(function () {
                     xhr.setRequestHeader('Authorization', 'Bearer ' + token);
                 },
                 data: {},
-                success: function (resp) {
-                    console.log('success: ', resp);
+                success: function (data) {
+                    var tmpl = $.templates("#myTmpl"); 
+                    var html = tmpl.render(data);      
+                    $("#divPosts").html(html);         
                 },
                 error: function (err) {
                     console.log('error: ', err);

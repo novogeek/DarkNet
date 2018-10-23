@@ -71,27 +71,42 @@
                 </div>
             </div>
         }
-
-        @foreach (var post in Model.lstUserPostsModels)
-        {
-            <div class="panel panel-default">
-                <div class="panel-heading"><h3 class="panel-title">@post.name</h3></div>
-                <div class="panel-body">
-                    <div>@post.post</div>
-                    <hr class="customHr">
-                    <div>
-                        <span>Privacy: @post.privacy</span>
-                        <span class="pull-right">Posted on: @post.timestamp</span>
+        <div id="divPosts">
+            @foreach (var post in Model.lstUserPostsModels)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h3 class="panel-title">@post.name</h3></div>
+                    <div class="panel-body">
+                        <div>@post.post</div>
+                        <hr class="customHr">
+                        <div>
+                            <span>Privacy: @post.privacy</span>
+                            <span class="pull-right">Posted on: @post.timestamp</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 </div>
 <div id="divHdn" class="hidden">
     <input type="hidden" id="hdnImpersonationIDPUrl" value=@ViewData["ImpersonationIDPUrl"] />
     <input type="hidden" id="hdnImpersonationRetUrl" value=@ViewData["ImpersonationRetUrl"] />
     <input type="hidden" id="hdnApiBaseUrl" value=@ViewData["ApiBaseUrl"] />
-    <input type="hidden" id="hdnloggedInUser" value="@User.Identity.Name"/>
+    <input type="hidden" id="hdnloggedInUser" value="@User.Identity.Name" />
     <iframe id="frmImplicit" src="" width="0" height="0"></iframe>
 </div>
+<!-- Declare a JsRender template, in a script block: -->
+<script id="myTmpl" type="text/x-jsrender">
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3 class="panel-title">{{:name}}</h3></div>
+        <div class="panel-body">
+            <div>{{:post}}</div>
+            <hr class="customHr">
+            <div>
+                <span>Privacy: {{:privacy}}</span>
+                <span class="pull-right">Posted on: {{:timestamp}}</span>
+            </div>
+        </div>
+    </div>
+</script>
